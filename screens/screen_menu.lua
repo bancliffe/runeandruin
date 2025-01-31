@@ -47,7 +47,7 @@ function draw_menu()
 			printc("\#0"..options[y],64,86+(y*8),col)
 	end
 	sspr(56,0,32,24,16,16,96,72)
-	print("\#0BY SQUIZM",90,120,5)
+	print("\#0SQUIZM",102,120,7)
 end
 
 function update_menu_particles()
