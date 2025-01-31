@@ -80,10 +80,16 @@ function draw_mode_active_unit_choose_action()
 	draw_tabletop()
 	curs:draw()
 	draw_units()
+
+	local unit = gm.units[gm.active_unit]
+	
 	-- draw ui stuff
 	camera()
 	print("\#0choose action",2,2,7)
-	print("\#0"..gm.units[gm.active_unit]["brain"].name,2,10,7)
+	print("\#0"..unit["brain"].name,2,10,7)
+	for i=1,#unit.actions do 
+		print("\#0"..sub(unit.actions[i],9),2,128-i*8,7)
+	end
 end
 
 -- Gameplay Modes
@@ -94,7 +100,6 @@ function init_game()
 	generate_tabletop()
 	place_units()
 	sortBySpeed(gm.units)
-	log("setting cursor target to: "..gm.units[gm.active_unit]["brain"].name)
 	curs:set_target(gm.units[gm.active_unit])
 end
 
