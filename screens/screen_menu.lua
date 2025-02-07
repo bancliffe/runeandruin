@@ -33,10 +33,7 @@ function update_menu()
 			_update60=update_game
 			_draw=draw_game
 		elseif selected_menu_item==2 then
-			music(-1)
-			init_minion()
-			_update60=update_minion
-			_draw=draw_minion
+			-- goto unit creator screen
 		elseif selected_menu_item==3 then
 			extcmd("shutdown")
 		end

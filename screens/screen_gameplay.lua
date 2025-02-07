@@ -29,12 +29,12 @@ curs=class:new({
 
 -- gameplay camera
 game_cam=class:new({
-	target=curs,
-	x=curs.x,
-	y=curs.y,
+	target=gm.units[gm.active_unit],
+	x=0,
+	y=0,
 	update=function(_ENV)
-	 x=lerp(x,target.x-64,0.1)
-	 y=lerp(y,target.y-64,0.1)
+	 x=lerp(x,(target.tile_x*8)-64,0.1)
+	 y=lerp(y,(target.tile_y*8)-64,0.1)
 	end,
 	draw=function(_ENV)
 		camera(x,y)
@@ -42,73 +42,35 @@ game_cam=class:new({
 })
 
 function draw_mode_test()
-	curs:draw()
-	draw_units()
-	
-	--draw_zone(1,1,4,4,11)
-	curs:draw()
-	draw_units()
-	
-	--draw_zone(1,1,4,4,11)
-	
-	-- draw ui stuff
-	camera()
-	color(7)
- 	for i=1,#gm.player.units do 
-		local unit = gm.player.units[i]
-		print("\#0"..unit["body"].name..": "..calc_spd(unit),2,2+8*i,7)
-	end
-end
-
-function update_mode_active_unit_choose_action()
-	if btnp(❎) then
-		gm.active_unit+=1
-		if (gm.active_unit > #gm.units) gm.active_unit=1
-		curs:set_target(gm.units[gm.active_unit])
-	end
-	curs:update()
-	game_cam:update()
-end
-
-function draw_mode_active_unit_choose_action()
-	-- Move Camera to active unit and display available actions
 	cls(0)
-	fillp(0x7ebd.1)
-	rectfill(0,0,128,128,1)
-	fillp()
 	game_cam:draw()
 	draw_tabletop()
 	curs:draw()
 	draw_units()
-
-	local unit = gm.units[gm.active_unit]
-	
+	circ(gm.units[gm.active_unit].tile_x*8 +4,gm.units[gm.active_unit].tile_y*8+4,4,8)
+	--draw_zone(1,1,4,4,11)
 	-- draw ui stuff
 	camera()
-	print("\#0choose action",2,2,7)
-	print("\#0"..unit["brain"].name,2,10,7)
-	for i=1,#unit.actions do 
-		print("\#0"..sub(unit.actions[i],9),2,128-i*8,7)
-	end
+	print(game_cam.target.tile_x..","..game_cam.target.tile_y, 2,2,7)
 end
-
--- Gameplay Modes
-current_draw_mode=draw_mode_active_unit_choose_action
-current_update_mode=update_mode_active_unit_choose_action
 
 function init_game()
 	generate_tabletop()
+	create_units()
 	place_units()
-	sortBySpeed(gm.units)
-	curs:set_target(gm.units[gm.active_unit])
 end
 
 function update_game()
-	current_update_mode()
+	curs:update()
+	game_cam:update()
+	if btnp(⬆️) then gm.active_unit+=1 end
+	if btnp(⬇️) then gm.active_unit-=1 end
+	gm.active_unit=mid(1,gm.active_unit,#gm.units)
+	game_cam.target=gm.units[gm.active_unit]
 end
 
 function draw_game()	
-	current_draw_mode()
+	draw_mode_test()
 end
 
 -- used to draw deployment zones or aoe
@@ -139,14 +101,15 @@ function place_units()
 			while not spot_found do 
 				tile_x=flr(rnd(tabletop_size)+1)
 				tile_y=tabletop_size-flr(rnd(8))
-				printh("x: "..tile_x.." y: "..tile_y,"@clip")
 				if tabletop[tile_x][tile_y]==1 then
 					spot_found=true
 				end
 			end
 			unit.tile_x=tile_x
 			unit.tile_y=tile_y
+			log("Placing unit \""..unit.name.." at {"..unit.tile_x..","..unit.tile_y.."}")
 		end
+		game_cam.target=gm.units[gm.active_unit]
 end
 
 function draw_tabletop()
@@ -158,11 +121,19 @@ function draw_tabletop()
 	end
 end
 
+function create_units()
+	for i=0,10 do 
+		unit = model:new()
+		unit.name="Unit"..i
+		add(gm.units,unit)
+	end
+end
+
 function draw_units()
 	--draw units
 	for unit in all(gm.units) do 
 		palt(14,true)
-		spr(unit.body.spr,unit.tile_x*8,unit.tile_y*8)
+		spr(unit.sprite,unit.tile_x*8,unit.tile_y*8)
 		palt()
 	end
 end

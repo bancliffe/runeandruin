@@ -27,7 +27,7 @@ function calc_spd(unit)
 end
 
 function log(str)
-	printh(get_time_stamp()..""..str,"log.txt",false)
+	printh(get_time_stamp()..""..str,"log.txt",true)
 end
 
 function get_time_stamp()

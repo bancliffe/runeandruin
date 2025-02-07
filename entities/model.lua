@@ -1,0 +1,32 @@
+model=class:new({
+  name="undefined", 
+  speed=1,
+  defense="d6",
+  firepower="d6",
+  prowess="d6",
+  willpower="d6",
+  state={},
+  actions={},
+  weapon_ranged=0,
+  weapon_close_combat=0,
+  equipment={},
+  tile_x=0,
+  tile_y=0,
+  sprite=64,
+  })
+
+  STATES={}
+  STATES.DOWN=0
+  STATES.STAGGERED=1
+  STATES.OUT_OF_ACTION=13
+  STATES.AIM_1=2
+  STATES.AIM_2=3
+  STATES.MOVE_1=4
+  STATES.MOVE_2=5
+  STATES.MOVE_3=6
+  STATES.SHOOT_1=7
+  STATES.SHOOT_2=8
+  STATES.SHOOT_3=9
+  STATES.FIGHT_1=10
+  STATES.FIGHT_2=11
+  STATES.FIGHT_3=12
