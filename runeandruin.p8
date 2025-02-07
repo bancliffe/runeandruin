@@ -14,6 +14,7 @@ __lua__
 
 
 function _init()
+	printh(get_time_stamp().."-- LOG START","log.txt",true)
 	init_menu()
 	_update60=update_menu
 	_draw=draw_menu

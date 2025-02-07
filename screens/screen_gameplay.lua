@@ -43,6 +43,9 @@ game_cam=class:new({
 
 function draw_mode_test()
 	cls(0)
+	fillp(0x7ebd.1)
+	rectfill(0,0,128,128,1)
+	fillp()
 	game_cam:draw()
 	draw_tabletop()
 	curs:draw()
@@ -51,7 +54,6 @@ function draw_mode_test()
 	--draw_zone(1,1,4,4,11)
 	-- draw ui stuff
 	camera()
-	print(game_cam.target.tile_x..","..game_cam.target.tile_y, 2,2,7)
 end
 
 function init_game()
