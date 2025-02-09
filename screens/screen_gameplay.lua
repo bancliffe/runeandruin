@@ -35,8 +35,8 @@ game_cam=class:new({
 	update=function(_ENV)
 	 x=lerp(x,(target.tile_x*8)-64,0.1)
 	 y=lerp(y,(target.tile_y*8)-64,0.1)
-	 x=mid(8,x,72)
-	 y=mid(8,y,72)
+	 x=mid(0,x,72)
+	 y=mid(0,y,72)
 	end,
 	draw=function(_ENV)
 		camera(x,y)
