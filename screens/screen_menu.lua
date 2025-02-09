@@ -1,4 +1,4 @@
-options={"new game","unit browser","quit"}
+options={"new game","quit"}
 selected_menu_item=1
 
 particles={}

@@ -47,7 +47,6 @@ function draw_mode_test()
 	cls(0)
 	game_cam:draw()
 	draw_tabletop()
-	curs:draw()
 	circ(gm.units[gm.active_unit].tile_x*8 +4,gm.units[gm.active_unit].tile_y*8+4,4,8)
 	draw_units()
 	-- draw ui stuff
