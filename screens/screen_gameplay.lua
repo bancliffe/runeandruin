@@ -51,6 +51,7 @@ function draw_mode_test()
 	draw_units()
 	-- draw ui stuff
 	camera()
+	draw_unit_stats()
 end
 
 function init_game()
@@ -112,7 +113,7 @@ end
 function create_units()
 	for i=0,10 do 
 		unit = model:new()
-		unit.name="Unit"..i
+		unit.name=generate_name()
 		add(gm.units,unit)
 	end
 end
@@ -126,4 +127,7 @@ function draw_units()
 	end
 end
 
-
+function draw_unit_stats()
+	local unit = gm.units[gm.active_unit]
+	print("\#0"..unit.name,2,2,7)
+end

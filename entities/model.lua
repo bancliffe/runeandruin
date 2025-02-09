@@ -30,3 +30,15 @@ model=class:new({
   STATES.FIGHT_1=10
   STATES.FIGHT_2=11
   STATES.FIGHT_3=12
+
+  function generate_name()
+    local consonants={"b","c","d","f","g","h","j","k","l","m","n","p","q","r","s","t","w","z"}
+    local vowels={"a","ae","au","ai","e","i","o","u","ou"}
+    local complex={"th","st","pr","st","sr","th","tr"}
+    
+    local nm = rnd(complex)..rnd(vowels)..rnd(consonants)
+    -- Chance at fancier name
+    if rnd(100)>75 then
+      nm+=rnd(vowels)
+    end
+  end
