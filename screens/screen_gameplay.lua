@@ -46,7 +46,7 @@ game_cam=class:new({
 function draw_mode_test()
 	cls(0)
 	game_cam:draw()
-	draw_tabletop()
+	map()
 	circ(gm.units[gm.active_unit].tile_x*8 +4,gm.units[gm.active_unit].tile_y*8+4,4,8)
 	draw_units()
 	-- draw ui stuff
@@ -84,11 +84,7 @@ function generate_tabletop()
 	for row=1,tabletop_size do
 		tabletop[row]={}
 		for column=1,tabletop_size do
-			if rnd(10) <= 9 then
-				tabletop[row][column]=rnd(tiles_empty)
-			else			
-				tabletop[row][column]=rnd({2,6})
-			end
+			tabletop[row][column]=mget(row,column)
 		end
 	end
 end
@@ -100,7 +96,9 @@ function place_units()
 			while not spot_found do 
 				tile_x=flr(rnd(tabletop_size)+1)
 				tile_y=flr(rnd(tabletop_size)+1)
-				if tabletop[tile_x][tile_y]==1 then
+				if tabletop[tile_x][tile_y]==1 or 
+					tabletop[tile_x][tile_y]==3 or 
+					tabletop[tile_x][tile_y]==4 then
 					spot_found=true
 				end
 			end
@@ -109,15 +107,6 @@ function place_units()
 			log("Placing unit \""..unit.name.." at {"..unit.tile_x..","..unit.tile_y.."}")
 		end
 		game_cam.target=gm.units[gm.active_unit]
-end
-
-function draw_tabletop()
-	-- draw tiles
-	for w=1,tabletop_size do
-		for h=1,tabletop_size do
-			spr(tabletop[w][h],w*8,h*8)
-		end
-	end
 end
 
 function create_units()
