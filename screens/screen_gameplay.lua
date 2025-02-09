@@ -35,6 +35,8 @@ game_cam=class:new({
 	update=function(_ENV)
 	 x=lerp(x,(target.tile_x*8)-64,0.1)
 	 y=lerp(y,(target.tile_y*8)-64,0.1)
+	 x=mid(8,x,72)
+	 y=mid(8,y,72)
 	end,
 	draw=function(_ENV)
 		camera(x,y)
@@ -43,15 +45,11 @@ game_cam=class:new({
 
 function draw_mode_test()
 	cls(0)
-	fillp(0x7ebd.1)
-	rectfill(0,0,128,128,1)
-	fillp()
 	game_cam:draw()
 	draw_tabletop()
 	curs:draw()
-	draw_units()
 	circ(gm.units[gm.active_unit].tile_x*8 +4,gm.units[gm.active_unit].tile_y*8+4,4,8)
-	--draw_zone(1,1,4,4,11)
+	draw_units()
 	-- draw ui stuff
 	camera()
 end
@@ -102,7 +100,7 @@ function place_units()
 			local tile_x,tile_y
 			while not spot_found do 
 				tile_x=flr(rnd(tabletop_size)+1)
-				tile_y=tabletop_size-flr(rnd(8))
+				tile_y=flr(rnd(tabletop_size)+1)
 				if tabletop[tile_x][tile_y]==1 then
 					spot_found=true
 				end
