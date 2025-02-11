@@ -51,7 +51,10 @@ function draw_mode_test()
 	draw_units()
 	-- draw ui stuff
 	camera()
-	draw_unit_stats()
+	if btn(❎,1) then
+		-- player 2 controls
+		draw_unit_stats()
+	end
 end
 
 function init_game()
@@ -114,6 +117,11 @@ function create_units()
 	for i=0,10 do 
 		unit = model:new()
 		unit.name=generate_name()
+		unit.firepower=rnd({"d6","d8","d10"})
+		unit.prowess=rnd({"d6","d8","d10"})
+		unit.defense=rnd({"d6","d8","d10"})
+		unit.willpower=rnd({"d6","d8","d10"})
+		unit.speed=rnd({1,2,3})
 		add(gm.units,unit)
 	end
 end
@@ -122,6 +130,7 @@ function draw_units()
 	--draw units
 	for unit in all(gm.units) do 
 		palt(14,true)
+		palt(0, false)
 		spr(unit.sprite,unit.tile_x*8,unit.tile_y*8)
 		palt()
 	end
@@ -130,4 +139,14 @@ end
 function draw_unit_stats()
 	local unit = gm.units[gm.active_unit]
 	print("\#0"..unit.name,2,2,7)
+
+	for i=1,unit.speed do 
+		circfill(6*i, 90, 3, 0)
+		circfill(6*i, 90, 2, 7)
+	end
+
+	print("\#0f: "..unit.firepower,2,96,7)
+	print("\#0p: "..unit.prowess,2,104,7)
+	print("\#0d: "..unit.defense,2,112,7)
+	print("\#0w: "..unit.willpower,2,120,7)
 end
