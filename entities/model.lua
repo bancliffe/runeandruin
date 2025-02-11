@@ -33,12 +33,22 @@ model=class:new({
 
   function generate_name()
     local consonants={"b","c","d","f","g","h","j","k","l","m","n","p","q","r","s","t","w","z"}
+    local final_cons={"c","d","f","g","h","k","l","m","n","p","r","s","t"}
     local vowels={"a","ae","au","ai","e","i","o","u","ou"}
     local complex={"th","st","pr","st","sr","th","tr"}
-    
-    local nm = rnd(complex)..rnd(vowels)..rnd(consonants)
+    local nm
+
+    if rnd(100)>75 then
+      nm = rnd(complex)..rnd(vowels)..rnd(consonants)
+    else
+      nm = rnd(consonants)..rnd(vowels)..rnd(consonants)
+    end     
     -- Chance at fancier name
     if rnd(100)>75 then
-      nm+=rnd(vowels)
+      nm=nm..rnd(vowels)
+      if rnd(100)>50 then
+        nm=nm..rnd(final_cons)
+      end
     end
+    return nm
   end
