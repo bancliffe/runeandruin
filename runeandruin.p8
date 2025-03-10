@@ -9,11 +9,13 @@ __lua__
 #include \entities\action.lua
 #include \screens\screen_menu.lua
 #include \screens\screen_gameplay.lua
+#include \screens\gameplay_details.lua
 #include \utils\utils.lua
 
 
 function _init()
-	printh(get_time_stamp().."-- LOG START","log.txt",true)
+	poke(0x5f2d, 0x01)
+	printh(get_time_stamp().."-- LOG START --","log.txt",true)
 	init_menu()
 	_update60=update_menu
 	_draw=draw_menu

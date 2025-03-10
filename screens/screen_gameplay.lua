@@ -1,6 +1,7 @@
 tabletop={}
 tabletop_size=24
 tiles_empty={1,1,1,1,1,1,1,1,3,4}
+selected_action=1
 
 -- cursor
 curs=class:new({
@@ -43,20 +44,6 @@ game_cam=class:new({
 	end
 })
 
-function draw_mode_test()
-	cls(0)
-	game_cam:draw()
-	map()
-	circ(gm.units[gm.active_unit].tile_x*8 +4,gm.units[gm.active_unit].tile_y*8+4,4,8)
-	draw_units()
-	-- draw ui stuff
-	camera()
-	if btn(❎,1) then
-		-- player 2 controls
-		draw_unit_stats()
-	end
-end
-
 function init_game()
 	generate_tabletop()
 	create_units()
@@ -64,16 +51,11 @@ function init_game()
 end
 
 function update_game()
-	curs:update()
-	game_cam:update()
-	if btnp(⬆️) then gm.active_unit+=1 end
-	if btnp(⬇️) then gm.active_unit-=1 end
-	gm.active_unit=mid(1,gm.active_unit,#gm.units)
-	game_cam.target=gm.units[gm.active_unit]
+	_update60=update_action_view
 end
 
 function draw_game()	
-	draw_mode_test()
+	_draw=draw_action_view
 end
 
 -- used to draw deployment zones or aoe
@@ -122,6 +104,11 @@ function create_units()
 		unit.defense=rnd({"d6","d8","d10"})
 		unit.willpower=rnd({"d6","d8","d10"})
 		unit.speed=rnd({1,2,3})
+		unit.actions={}
+		add(unit.actions,action_move)
+		add(unit.actions,action_shoot)
+		add(unit.actions,action_fight)
+		add(unit.actions,action_pass)
 		add(gm.units,unit)
 	end
 end
@@ -138,7 +125,8 @@ end
 
 function draw_unit_stats()
 	local unit = gm.units[gm.active_unit]
-	print("\#0"..unit.name,2,2,7)
+	strlen=print(unit.name,0,-10,7)
+	print("\#0"..unit.name,126-strlen,2,7)
 
 	for i=1,unit.speed do 
 		circfill(6*i, 90, 3, 0)
@@ -149,4 +137,22 @@ function draw_unit_stats()
 	print("\#0p: "..unit.prowess,2,104,7)
 	print("\#0d: "..unit.defense,2,112,7)
 	print("\#0w: "..unit.willpower,2,120,7)
+end
+
+function draw_los()
+	mx,my=stat(32),stat(33)
+	start_pos={}
+	start_pos.x=gm.units[gm.active_unit].tile_x*8 +4
+	start_pos.y=gm.units[gm.active_unit].tile_y*8 +4
+	end_pos={}
+	end_pos.x=mx
+	end_pos.y=my
+
+	if line_of_sight(start_pos,end_pos) then
+		line(start_pos.x,start_pos.y,mx,my,11)
+		circ(mx,my,4,11)
+	else
+		line(start_pos.x,start_pos.y,mx,my,8)
+		circ(mx,my,4,8)
+	end	
 end

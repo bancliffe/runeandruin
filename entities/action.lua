@@ -9,21 +9,21 @@ action_move=action:new({
 
 action_aim=action:new({
 	name="aim",
-	on_action=function(shooter)
+	on_action=function()
 		-- increase next shoot DT
 	end
 })
 
 action_shoot=action:new({
 	name="shoot",
-	on_action=function(shooter, target)
+	on_action=function(target)
 		-- shoot at target
 	end
 })
 
 action_fight=action:new({
 	name="fight",
-	on_action=function(fighter, target)
+	on_action=function(target)
 		-- fight in close combat
 	end
 })
@@ -37,7 +37,7 @@ action_disengage=action:new({
 
 action_psychic_power=action:new({
 	name="psychic power",
-	on_action=function(caster, target)
+	on_action=function(target)
 		-- tbd
 	end
 })
@@ -59,6 +59,13 @@ action_stand=action:new({
 action_use_item=action:new({
 	name="use item",
 	on_action=function(item)
+		-- use item
+	end
+})
+
+action_pass=action:new({
+	name="pass",
+	on_action=function()
 		-- use item
 	end
 })
