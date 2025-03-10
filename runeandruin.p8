@@ -12,7 +12,7 @@ __lua__
 #include \screens\gameplay_details.lua
 #include \utils\utils.lua
 
-
+-- ❎🅾️⬆️⬇️⬅️➡️
 function _init()
 	poke(0x5f2d, 0x01)
 	printh(get_time_stamp().."-- LOG START --","log.txt",true)

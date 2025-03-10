@@ -1,5 +1,8 @@
 -- ❎🅾️⬆️⬇️⬅️➡️
 
+--[[
+	View the battlefield and cycle through units
+]]
 function update_action_view()
   curs:update()
 	game_cam:update()
@@ -8,8 +11,19 @@ function update_action_view()
 	if (btnp(⬇️,0)) selected_action+=1
 	if (btnp(⬆️,0)) selected_action-=1
   if (btnp(❎,0)) then
-    if gm.units[gm.active_unit].actions[selected_action].name=="move" then
-      log("Moving unit!")
+		action_name = gm.units[gm.active_unit].actions[selected_action].name
+    if action_name=="move" then
+      _update60=update_action_move
+			_draw=draw_action_move
+		elseif action_name=="shoot" then
+			_update60=update_action_shoot
+			_draw=draw_action_shoot
+		elseif action_name=="fight" then
+			_update60=update_action_fight
+			_draw=draw_action_fight
+		elseif action_name=="pass" then
+			gm.active_unit+=1 
+			selected_action=1
     end
   end
 	gm.active_unit=mid(1,gm.active_unit,#gm.units)
@@ -40,12 +54,71 @@ function draw_action_view()
 	end
 end
 
-function update_choose_action()
-end
-
+--[[
+	Move the selected unit
+]]
 function update_action_move()
-  
+  if (btnp(🅾️,0)) then
+		_update60=update_action_view
+		_draw=draw_action_view
+	end
 end
 
-function update_action_pass()
+function draw_action_move()
+	cls(0)
+	game_cam:draw()
+	map()
+	circ(gm.units[gm.active_unit].tile_x*8 +4,gm.units[gm.active_unit].tile_y*8+4,4,8)
+	draw_units()
+
+	-- draw ui stuff
+	camera()
+	unit = gm.units[gm.active_unit]
+	print("\#0"..unit.name.." moving.", 2, 2, 8)
+end
+
+--[[
+	Shoot with the active unit
+]]
+	function update_action_shoot()
+		if (btnp(🅾️,0)) then
+			_update60=update_action_view
+			_draw=draw_action_view
+		end
+	end
+
+	function draw_action_shoot()
+		cls(0)
+		game_cam:draw()
+		map()
+		circ(gm.units[gm.active_unit].tile_x*8 +4,gm.units[gm.active_unit].tile_y*8+4,4,8)
+		draw_units()
+
+		-- draw ui stuff
+		camera()
+		unit = gm.units[gm.active_unit]
+		print("\#0"..unit.name.." shooting.", 2, 2, 8)
+	end
+
+	--[[
+	Shoot with the active unit
+]]
+function update_action_fight()
+	if (btnp(🅾️,0)) then
+		_update60=update_action_view
+		_draw=draw_action_view
+	end
+end
+
+function draw_action_fight()
+	cls(0)
+	game_cam:draw()
+	map()
+	circ(gm.units[gm.active_unit].tile_x*8 +4,gm.units[gm.active_unit].tile_y*8+4,4,8)
+	draw_units()
+
+	-- draw ui stuff
+	camera()
+	unit = gm.units[gm.active_unit]
+	print("\#0"..unit.name.." fighting.", 2, 2, 8)
 end
