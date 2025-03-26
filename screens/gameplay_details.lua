@@ -36,7 +36,11 @@ function draw_action_view()
   cls(0)
 	game_cam:draw()
 	map()
-	circ(gm.units[gm.active_unit].tile_x*8 +4,gm.units[gm.active_unit].tile_y*8+4,4,8)
+	rect(gm.units[gm.active_unit].tile_x*8-1,
+		gm.units[gm.active_unit].tile_y*8-1,
+		gm.units[gm.active_unit].tile_x*8+8,
+		gm.units[gm.active_unit].tile_y*8+8,
+		8)
 	draw_units()
 
 	-- draw ui stuff

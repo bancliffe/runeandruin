@@ -12,7 +12,8 @@ model=class:new({
   equipment={},
   tile_x=0,
   tile_y=0,
-  sprite=64,
+  sprite=19,
+  flip_h=false
   })
 
   STATES={}

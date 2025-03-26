@@ -21,8 +21,10 @@ curs=class:new({
 	draw=function(_ENV)
 		--rect(x,y,x+7,y+7,7)
 		palt(14,true)
+		palt(0,false)
 		spr(58,x,y)
 		pal(14,false)
+		palt(0,true)
 	end,
 	set_target=function(_ENV, a)
 		target=a
@@ -93,6 +95,9 @@ function place_units()
 			end
 			unit.tile_x=tile_x
 			unit.tile_y=tile_y
+			if tile_x < tabletop_size/2 then 
+				unit.flip_h=true
+			end
 			log("Placing unit \""..unit.name.." at {"..unit.tile_x..","..unit.tile_y.."}")
 		end
 		game_cam.target=gm.units[gm.active_unit]
@@ -121,8 +126,9 @@ function draw_units()
 	for unit in all(gm.units) do 
 		palt(14,true)
 		palt(0, false)
-		spr(unit.sprite,unit.tile_x*8,unit.tile_y*8)
+		spr(unit.sprite,unit.tile_x*8,unit.tile_y*8,1,1,unit.flip_h, false)
 		palt()
+		
 	end
 end
 
