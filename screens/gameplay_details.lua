@@ -18,6 +18,7 @@ function update_action_view()
 		elseif action_name=="shoot" then
 			_update60=update_action_shoot
 			_draw=draw_action_shoot
+			game_cam.target=curs
 		elseif action_name=="fight" then
 			_update60=update_action_fight
 			_draw=draw_action_fight
@@ -81,10 +82,21 @@ end
 	Shoot with the active unit
 ]]
 	function update_action_shoot()
+		curs:update()
+		game_cam:update()
 		if (btnp(🅾️,0)) then
 			_update60=update_action_view
 			_draw=draw_action_view
 		end
+		if (btnp(➡️,0)) curs.x+=8
+		if (btnp(⬅️,0)) curs.x-=8
+		if (btnp(⬇️,0)) curs.y+=8
+		if (btnp(⬆️,0)) curs.y-=8
+  	--if (btnp(❎,0)) 
+		--[[
+		create target cursor
+		mouse movement follows cursor now
+		]]
 	end
 
 	function draw_action_shoot()
@@ -93,6 +105,7 @@ end
 		map()
 		circ(gm.units[gm.active_unit].tile_x*8 +4,gm.units[gm.active_unit].tile_y*8+4,4,8)
 		draw_units()
+		curs:draw()
 
 		-- draw ui stuff
 		camera()

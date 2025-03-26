@@ -19,7 +19,10 @@ curs=class:new({
 		]]
 	end, 
 	draw=function(_ENV)
-		rect(x,y,x+7,y+7,7)
+		--rect(x,y,x+7,y+7,7)
+		palt(14,true)
+		spr(58,x,y)
+		pal(14,false)
 	end,
 	set_target=function(_ENV, a)
 		target=a
