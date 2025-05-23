@@ -15,6 +15,7 @@ function update_action_view()
     if action_name=="move" then
       _update60=update_action_move
 			_draw=draw_action_move
+			game_cam.target=gm.units[gm.active_unit]	
 		elseif action_name=="shoot" then
 			_update60=update_action_shoot
 			_draw=draw_action_shoot
@@ -22,14 +23,15 @@ function update_action_view()
 		elseif action_name=="fight" then
 			_update60=update_action_fight
 			_draw=draw_action_fight
+			game_cam.target=gm.units[gm.active_unit]	
 		elseif action_name=="pass" then
 			gm.active_unit+=1 
 			selected_action=1
+			game_cam.target=gm.units[gm.active_unit]	
     end
   end
 	gm.active_unit=mid(1,gm.active_unit,#gm.units)
 	selected_action=mid(1,selected_action,#gm.units[gm.active_unit].actions)
-	game_cam.target=gm.units[gm.active_unit]	
 end
 
 function draw_action_view()
@@ -67,6 +69,7 @@ function update_action_move()
 		_update60=update_action_view
 		_draw=draw_action_view
 	end
+
 end
 
 function draw_action_move()
@@ -115,6 +118,7 @@ end
 		camera()
 		unit = gm.units[gm.active_unit]
 		print("\#0"..unit.name.." shooting.", 2, 2, 8)
+		print("\#0"..game_cam.target.tile_x..","..game_cam.target.tile_y, 2, 10, 8)
 	end
 
 	--[[

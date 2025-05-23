@@ -7,6 +7,7 @@ selected_action=1
 curs=class:new({
 	x=tabletop_size/2*8,
 	y=tabletop_size/2*8,
+	
 	target=0,
 	update=function(_ENV)
 		--[[
@@ -17,6 +18,8 @@ curs=class:new({
 		x=mid(8,x,(tabletop_size*8)) --clamp val
 		y=mid(8,y,(tabletop_size*8))
 		]]
+		tile_x=x
+		tile_y=y
 	end, 
 	draw=function(_ENV)
 		--rect(x,y,x+7,y+7,7)
@@ -27,9 +30,9 @@ curs=class:new({
 		palt(0,true)
 	end,
 	set_target=function(_ENV, a)
-		target=a
-		x=target.tile_x*8
-		y=target.tile_y*8
+		--target=a
+		--x=target.tile_x*8
+		--y=target.tile_y*8
 	end
 })
 
@@ -111,6 +114,7 @@ function create_units()
 		unit.prowess=rnd({"d6","d8","d10"})
 		unit.defense=rnd({"d6","d8","d10"})
 		unit.willpower=rnd({"d6","d8","d10"})
+		unit.sprite=rnd({19,20,21,22,37,38})
 		unit.speed=rnd({1,2,3})
 		unit.actions={}
 		add(unit.actions,action_move)
